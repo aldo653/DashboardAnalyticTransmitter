@@ -15,14 +15,13 @@ export default function Header() {
                             </li>
                         </ul>
 
-                        <div className="d-block d-lg-none flex items-center gap-2">
+                        <div className="d-block d-lg-none flex items-center">
                             <Image
                                 src="/assets/asset/main_logo.svg"
                                 alt="Main Logo"
                                 width={180}
                                 height={60}
                             />
-                            <span className="text-lg font-semibold">Transmitter Analytic Dashboard</span>
                         </div>
 
                         <a className="navbar-toggler nav-icon-hover p-0 border-0" href="#" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

@@ -3,31 +3,29 @@ import Head from "next/head";
 import MainLayout from "../pages/layout/main";
 
 export default function Dashboard() {
-  const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 3000);
 
-    return () => clearTimeout(timer);
-  }, []);
+        return () => clearTimeout(timer);
+    }, []);
 
-  return (
-    <>
-      <Head>
-        <title>
-          Transmitter Analytic Dashboard | TVRI Sumatera Selatan
-        </title>
-      </Head>
+    return (
+        <>
+            <Head>
+                <title>
+                    Transmitter Analytic Dashboard | TVRI Sumatera Selatan
+                </title>
+            </Head>
 
-      {loading ? (
-        <div className="flex items-center justify-center h-screen">
-          <p>Loading...</p>
-        </div>
-      ) : (
-        <MainLayout />
-      )}
-    </>
-  );
+            {loading ? (
+                <div></div>
+            ) : (
+                <MainLayout></MainLayout>
+            )}
+        </>
+    );
 }
