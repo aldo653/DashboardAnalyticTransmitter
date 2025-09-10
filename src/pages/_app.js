@@ -2,17 +2,16 @@ import { useEffect } from "react";
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
-    function handleColorTheme(e) {
-      document.documentElement.setAttribute("data-color-theme", e);
-      const el = document.querySelector(e);
+    function handleColorTheme(theme) {
+      document.documentElement.setAttribute("data-color-theme", theme);
+      const el = document.querySelector(`[value="${theme}"]`);
       if (el) el.checked = true;
     }
-    document.addEventListener("DOMContentLoaded", () => {
-      handleColorTheme("light");
-    });
+
+    handleColorTheme("light");
 
     return () => {
-      document.removeEventListener("DOMContentLoaded", handleColorTheme);
+      // cleanup kalau nanti ada event tambahan
     };
   }, []);
 

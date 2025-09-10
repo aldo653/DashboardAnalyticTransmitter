@@ -12,7 +12,6 @@ export default function Document() {
         <link rel="stylesheet" href="/assets/css/styles.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@5.3.3/dist/simplebar.min.css" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
-        <title>Transmitter Analytic Dashboard | TVRI Sumatera Selatan</title>
       </Head>
       <body>
         <Main />
@@ -26,9 +25,8 @@ export default function Document() {
         <Script src="/assets/libs/simplebar/dist/simplebar.min.js" strategy="lazyOnload" />
         <Script src="/assets/js/sidebarmenu.js" strategy="lazyOnload" />
         <Script src="/assets/js/theme.js" strategy="lazyOnload" />
-        <script src="/assets/js/dashboards/dashboard.js"></script>
-        <Script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.19.0/dist/powerbi.min.js"></Script>
-        <Script async src="https://gwkong.pusri.co.id/umami-i-pms/script.js" data-website-id="60b39bfe-f57c-4cbf-8955-0fbf61ca1576"></Script>
+        <Script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.19.0/dist/powerbi.min.js" strategy="lazyOnload" />
+        <Script async src="https://gwkong.pusri.co.id/umami-i-pms/script.js" data-website-id="60b39bfe-f57c-4cbf-8955-0fbf61ca1576" />
       </body>
     </Html>
   );
