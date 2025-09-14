@@ -25,7 +25,7 @@ export default function MainDashboard() {
             <div className="card-body">
               <div className="d-sm-flex d-block align-items-center justify-content-between mb-9">
                 <div className="mb-3 mb-sm-0">
-                  <h5 className="card-title fw-semibold">Revenue Updates</h5>
+                  <h5 className="card-title fw-semibold">Nilai Transmisi</h5>
                   <p className="card-subtitle mb-0">Overview of Profit</p>
                 </div>
                 <select className="form-select w-30">
