@@ -100,9 +100,9 @@ export default function MainDashboard() {
                 <div className="col-12 col-md-6">
                     <div className="card w-100" style={{height: "350px"}}>
                         <div className="card-body">
-                            <h5 className="card-title fw-semibold mb-3">
+                            <h6 className="fw-semibold mb-3">
                                 Grafik Video Output
-                            </h5>
+                            </h6>
                             <ResponsiveContainer width="110%" height={250} style={{ marginLeft: "-40px" }}>
                                 <LineChart data={chartData}>
                                     <CartesianGrid strokeDasharray="3 3" stroke="#eee" />

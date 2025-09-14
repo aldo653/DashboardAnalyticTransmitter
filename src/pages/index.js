@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import MainLayout from "../pages/layout/main";
 import MainDashboard from "./component/main-dashboard";
+import Caraosel from "./component/caraosel";
 
 export default function Dashboard() {
     const [loading, setLoading] = useState(true);
@@ -17,6 +18,7 @@ export default function Dashboard() {
                 <title>Transmitter Analytic Dashboard | TVRI Sumatera Selatan</title>
             </Head>
             <MainLayout>
+                <Caraosel />
                 <MainDashboard />
             </MainLayout>
         </>
