@@ -2,7 +2,7 @@
 import React, { useMemo } from "react";
 import Image from "next/image";
 import { useTransmitterData } from "../api/fetchController";
-import { getMonthlyAverage } from "../utils/getMonth";
+import {getMonthlyAverage} from '../../utils/getMonth';
 
 export default function Carousel() {
     const { data, loading } = useTransmitterData();

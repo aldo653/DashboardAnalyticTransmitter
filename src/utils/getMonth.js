@@ -1,4 +1,3 @@
-// utils/dataHelpers.js
 export function getMonthlyAverage(data, columnNames) {
     if (!data || data.length === 0) return 0;
 

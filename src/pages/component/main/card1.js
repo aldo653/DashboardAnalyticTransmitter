@@ -5,8 +5,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import { parse } from "date-fns";
 
 export default function CardTable({ data, selectedDate, setSelectedDate }) {
+    // fallback supaya gak error kalau data undefined/null
+    const safeData = Array.isArray(data) ? data : [];
+
     const filteredData = selectedDate
-        ? data.filter((row) => {
+        ? safeData.filter((row) => {
             const rowDate = parse(
                 row["Timestamp"].split(" ")[0],
                 "dd/MM/yyyy",
@@ -18,7 +21,7 @@ export default function CardTable({ data, selectedDate, setSelectedDate }) {
                 rowDate.getDate() === selectedDate.getDate()
             );
         })
-        : data;
+        : safeData;
 
     return (
         <div className="col-12">
@@ -53,17 +56,25 @@ export default function CardTable({ data, selectedDate, setSelectedDate }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredData.map((row, index) => (
-                                    <tr key={index}>
-                                        <td>{row["Timestamp"]}</td>
-                                        <td>{row["TX DIGITAL"]}</td>
-                                        <td>{row["EXCITER TX DIGITAL"]}</td>
-                                        <td>{row["Video Output (Kw)"]}</td>
-                                        <td>{row["Video Reflected (Watt)"]}</td>
-                                        <td>{row["Exciter Output (dBm)"]}</td>
-                                        <td>{row["Cooling Liquid Flow (L/min)"]}</td>
+                                {filteredData.length > 0 ? (
+                                    filteredData.map((row, index) => (
+                                        <tr key={index}>
+                                            <td>{row["Timestamp"]}</td>
+                                            <td>{row["TX DIGITAL"]}</td>
+                                            <td>{row["EXCITER TX DIGITAL"]}</td>
+                                            <td>{row["Video Output (Kw)"]}</td>
+                                            <td>{row["Video Reflected (Watt)"]}</td>
+                                            <td>{row["Exciter Output (dBm)"]}</td>
+                                            <td>{row["Cooling Liquid Flow (L/min)"]}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan={7} className="text-center">
+                                            Tidak ada data tersedia
+                                        </td>
                                     </tr>
-                                ))}
+                                )}
                             </tbody>
                         </table>
                     </div>

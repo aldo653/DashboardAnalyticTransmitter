@@ -5,10 +5,16 @@ import {
 } from "recharts";
 
 export default function CardChart({ data }) {
-    const chartData = data.map((row) => ({
-        timestamp: row["Timestamp"].split(" ")[1] || row["Timestamp"],
-        videoOutput: Number(row["Video Output (Kw)"]) || 0
-    }));
+    // kalau data undefined/null, jadikan array kosong
+    const safeData = Array.isArray(data) ? data : [];
+
+    const chartData = safeData.map((row) => {
+        const timestamp = row["Timestamp"] ? row["Timestamp"].split(" ")[1] : "N/A";
+        return {
+            timestamp,
+            videoOutput: Number(row["Video Output (Kw)"]) || 0
+        };
+    });
 
     return (
         <div className="col-12 col-md-6">
