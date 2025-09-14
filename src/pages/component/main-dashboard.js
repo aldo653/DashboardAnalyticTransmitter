@@ -13,7 +13,7 @@ export default function MainDashboard() {
 
     fetchData();
 
-    const interval = setInterval(fetchData, 10000);
+    const interval = setInterval(fetchData, 600000);
     return () => clearInterval(interval);
   }, []);
 
