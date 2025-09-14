@@ -1,31 +1,24 @@
-import React, { useEffect, useState } from "react";
 import Head from "next/head";
+import { useEffect, useState } from "react";
 import MainLayout from "../pages/layout/main";
+import MainDashboard from "./component/main-dashboard";
 
 export default function Dashboard() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 3000);
-
+        const timer = setTimeout(() => setLoading(false), 2000);
         return () => clearTimeout(timer);
     }, []);
 
     return (
         <>
             <Head>
-                <title>
-                    Transmitter Analytic Dashboard | TVRI Sumatera Selatan
-                </title>
+                <title>Transmitter Analytic Dashboard | TVRI Sumatera Selatan</title>
             </Head>
-
-            {loading ? (
-                <div></div>
-            ) : (
-                <MainLayout></MainLayout>
-            )}
+            <MainLayout>
+                <MainDashboard />
+            </MainLayout>
         </>
     );
 }

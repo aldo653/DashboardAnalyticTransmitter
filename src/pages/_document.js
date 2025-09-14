@@ -25,8 +25,6 @@ export default function Document() {
         <Script src="/assets/libs/simplebar/dist/simplebar.min.js" strategy="lazyOnload" />
         <Script src="/assets/js/sidebarmenu.js" strategy="lazyOnload" />
         <Script src="/assets/js/theme.js" strategy="lazyOnload" />
-        <Script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.19.0/dist/powerbi.min.js" strategy="lazyOnload" />
-        <Script async src="https://gwkong.pusri.co.id/umami-i-pms/script.js" data-website-id="60b39bfe-f57c-4cbf-8955-0fbf61ca1576" />
       </body>
     </Html>
   );

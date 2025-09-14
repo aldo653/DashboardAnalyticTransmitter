@@ -1,46 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import navbar from './navbar';
-import header from './header';
+import Navbar from "./navbar";
+import Header from "./header";
 
 const MainLayout = ({ children }) => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [loading]);
-
   return (
-    <>
-      {/* Preloader */}
-      {loading && (
-        <div className="preloader">
-          <img
-            src="/assets/asset/logo.png"
-            alt="loader"
-            className="lds-ripple img-fluid"
-          />
+    <div id="main-wrapper" style={{ border: "1px solid #ccc", padding: "1rem" }}>
+      {/* Sidebar */}
+      <Navbar />
+
+      {/* Content */}
+      <div className="page-wrapper">
+        <Header />
+         <div class="body-wrapper">
+          <div class="container-fluid">
+            {children}
+          </div>
         </div>
-      )}
-
-      {/* Main Wrapper */}
-      <div id="main-wrapper">
-        {/* Sidebar Vertical */}
-        {navbar()}
-
-        {/* Page Wrapper */}
-        <div className="page-wrapper">
-          {/* Topbar */}
-            {header()}
-
-          {/* Page Content */}
-          <div>{children}</div>
-        </div>
+        {/* End Content */}
       </div>
-    </>
+    </div>
   );
 };
 

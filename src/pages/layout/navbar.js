@@ -1,6 +1,10 @@
 import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname(); // Mendapatkan path saat ini
+
   return (
     <div>
       <aside className="left-sidebar with-horizontal">
@@ -13,16 +17,17 @@ export default function Navbar() {
               </li>
 
               <li className="sidebar-item">
-                <a className="sidebar-link" href="#" aria-expanded="false">
+                <Link className={`sidebar-link ${pathname === "/" ? "active" : ""}`} href="/" aria-expanded="false">
                   <span><i className="ti ti-broadcast"></i></span>
                   <span className="hide-menu">Daily Transmission</span>
-                </a>
+                </Link>
               </li>
-               <li className="sidebar-item">
-                <a className="sidebar-link" href="#" aria-expanded="false">
+
+              <li className="sidebar-item">
+                <Link className={`sidebar-link ${pathname === "/warmup" ? "active" : ""}`} href="/warmup" aria-expanded="false">
                   <span><i className="ti ti-flame"></i></span>
                   <span className="hide-menu">Warmup Backup Transmitter</span>
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
