@@ -9,6 +9,12 @@ export default function DashboardLayout() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    const TELEGRAM_BOT_TOKEN = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
+    const CHAT_ID = process.env.NEXT_PUBLIC_CHAT_ID;
+
+    console.log("TELEGRAM_BOT_TOKEN:", TELEGRAM_BOT_TOKEN);
+    console.log("CHAT_ID:", CHAT_ID);
+
     useEffect(() => {
         if (!loading) {
             const timer = setTimeout(() => setIsLoading(false), 500);
