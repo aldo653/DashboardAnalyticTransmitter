@@ -1,19 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useTransmitterData } from "../api/fetchController";
-import CardTable from "./main/card1";
-import CardChart from "./main/card2";
+import CardChart from "./main/cardvideooutput";
+import CardReflect from "./main/cardvideoreflected";
 
 export default function DashboardLayout() {
     const { data, loading } = useTransmitterData();
     const [selectedDate, setSelectedDate] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-
-    const TELEGRAM_BOT_TOKEN = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
-    const CHAT_ID = process.env.NEXT_PUBLIC_CHAT_ID;
-
-    console.log("TELEGRAM_BOT_TOKEN:", TELEGRAM_BOT_TOKEN);
-    console.log("CHAT_ID:", CHAT_ID);
 
     useEffect(() => {
         if (!loading) {
@@ -34,13 +28,9 @@ export default function DashboardLayout() {
 
     return (
         <div>
-            <CardTable
-                data={data}
-                selectedDate={selectedDate}
-                setSelectedDate={setSelectedDate}
-            />
             <div className="row">
                 <CardChart data={data} />
+                <CardReflect data={data} />
             </div>
         </div>
     );

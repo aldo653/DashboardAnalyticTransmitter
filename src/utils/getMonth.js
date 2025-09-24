@@ -1,32 +1,25 @@
-export function getMonthlyAverage(data, columnNames) {
-    if (!data || data.length === 0) return 0;
+export function getMonthlyAverage(formatted, columnNames) {
+  if (!formatted || formatted.length === 0) return 0;
 
-    const today = new Date();
-    const currentMonth = today.getMonth() + 1;
-    const currentYear = today.getFullYear();
+  // pastikan kolom bisa string atau array
+  const cols = Array.isArray(columnNames) ? columnNames : [columnNames];
 
-    // pastikan columnNames bisa array atau string
-    const cols = Array.isArray(columnNames) ? columnNames : [columnNames];
+  const sum = formatted.reduce((acc, row) => {
+    const rowSum = cols.reduce((cAcc, col) => {
+      let val = row[col];
 
-    // filter hanya data di bulan & tahun sekarang
-    const filtered = data.filter((row) => {
-        const [datePart] = row["Timestamp"].split(" ");
-        const [day, month, year] = datePart.split("/").map(Number);
-        return month === currentMonth && year === currentYear;
-    });
+      // ubah "5,02" jadi "5.02"
+      if (typeof val === "string") {
+        val = val.replace(",", ".");
+      }
 
-    if (filtered.length === 0) return 0;
-
-    // hitung rata-rata
-    const sum = filtered.reduce((acc, row) => {
-        // jumlahkan semua kolom yang dipilih
-        const rowSum = cols.reduce((cAcc, col) => {
-            return cAcc + (Number(row[col]) || 0);
-        }, 0);
-
-        return acc + rowSum;
+      const num = Number(val);
+      return cAcc + (!isNaN(num) ? num : 0);
     }, 0);
 
-    const totalCount = filtered.length * cols.length;
-    return (sum / totalCount).toFixed(2);
+    return acc + rowSum;
+  }, 0);
+
+  const totalCount = formatted.length * cols.length;
+  return totalCount > 0 ? Number((sum / totalCount).toFixed(2)) : 0;
 }
