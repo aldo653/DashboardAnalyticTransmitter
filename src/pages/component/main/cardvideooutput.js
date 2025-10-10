@@ -82,7 +82,7 @@ export default function CardChart({ data }) {
                 value={selectedMonth}
                 onChange={(e) => setSelectedMonth(e.target.value)}
               />
-              <button className="btn btn-sm btn-outline-secondary" onClick={() => setSelectedMonth("")}
+              <button className="btn btn-sm btn-outline-primary" onClick={() => setSelectedMonth("")}
                 title="Tampilkan semua"><i className="ti ti-refresh"></i>
               </button>
             </div>

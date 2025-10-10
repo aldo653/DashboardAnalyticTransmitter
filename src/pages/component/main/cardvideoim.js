@@ -10,8 +10,8 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-export default function CardReflect({ data }) {
-  const [selectedMonth, setSelectedMonth] = useState(""); 
+export default function CardIm({ data }) {
+  const [selectedMonth, setSelectedMonth] = useState(""); // format: "YYYY-MM" atau "" = semua
   const safeData = Array.isArray(data) ? data : [];
 
   const chartData = useMemo(() => {
@@ -21,6 +21,7 @@ export default function CardReflect({ data }) {
       const tglRaw = row["Tgl"];
       if (!tglRaw) return;
 
+      // parsing format "MM/DD/YYYY" → contoh 08/20/2025
       const parts = tglRaw.toString().split("/");
       if (parts.length < 3) return;
 
@@ -33,7 +34,7 @@ export default function CardReflect({ data }) {
       const monthKey = `${year}-${String(month).padStart(2, "0")}`;
       if (selectedMonth && monthKey !== selectedMonth) return; // filter by month
 
-      const rawValue = row["Video Reflected (Watt)"];
+      const rawValue = row["Video IM (dB)"];
       if (!rawValue) return;
 
       const value = Number(String(rawValue).replace(",", "."));
@@ -55,10 +56,11 @@ export default function CardReflect({ data }) {
       grouped[dateKey].count += 1;
     });
 
+    // ubah ke array, rata-rata, urutkan
     return Object.entries(grouped)
       .map(([date, { total, count, dateObj }]) => ({
         tanggal: date,
-        videoReflect: count > 0 ? Number((total / count).toFixed(2)) : 0,
+        VideoIM: count > 0 ? Number((total / count).toFixed(2)) : 0,
         _dateObj: dateObj
       }))
       .sort((a, b) => a._dateObj - b._dateObj)
@@ -71,7 +73,7 @@ export default function CardReflect({ data }) {
         <div className="card-body">
           <div className="d-flex justify-content-between">
             <div>
-              <h6 className="fw-semibold mb-3"><i className="ti ti-video text-danger me-2 fw-bold"></i>Rata-Rata Video Reflected (Watt)</h6>
+              <h6 className="fw-semibold mb-3"><i className="ti ti-video text-success me-2 fw-bold"></i>Rata-Rata Video IM (dB)</h6>
             </div>
             <div className="d-flex gap-2 align-items-center mb-3">
               <input
@@ -80,7 +82,7 @@ export default function CardReflect({ data }) {
                 value={selectedMonth}
                 onChange={(e) => setSelectedMonth(e.target.value)}
               />
-              <button className="btn btn-sm btn-outline-danger" onClick={() => setSelectedMonth("")}
+              <button className="btn btn-sm btn-outline-success" onClick={() => setSelectedMonth("")}
                 title="Tampilkan semua"><i className="ti ti-refresh"></i>
               </button>
             </div>
@@ -88,9 +90,9 @@ export default function CardReflect({ data }) {
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={chartData}>
               <defs>
-                <linearGradient id="colorvideoReflect" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#d57d35ff" stopOpacity={0.6} />
-                  <stop offset="95%" stopColor="#d57d35ff" stopOpacity={0} />
+                <linearGradient id="colorvideoIm" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#13deb9" stopOpacity={0.6} />
+                  <stop offset="95%" stopColor="#13deb9" stopOpacity={0} />
                 </linearGradient>
               </defs>
 
@@ -108,17 +110,17 @@ export default function CardReflect({ data }) {
 
               <Area
                 type="monotone"
-                dataKey="videoReflect"
-                stroke="#d57d35ff"
+                dataKey="VideoIM"
+                stroke="#13deb9"
                 strokeWidth={1.5}
-                fill="url(#colorvideoReflect)"
+                fill="url(#colorvideoIm)"
                 activeDot={{
                   r: 4,
-                  fill: "#d57d35ff",
+                  fill: "#13deb9",
                   stroke: "#fff",
                   strokeWidth: 1
                 }}
-                dot={{ r: 2, fill: "#d57d35ff" }}
+                dot={{ r: 2, fill: "#13deb9" }}
                 isAnimationActive={true}
                 animationDuration={800}
               />

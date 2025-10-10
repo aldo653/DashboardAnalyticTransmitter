@@ -10,7 +10,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-export default function CardReflect({ data }) {
+export default function CardCooolingLiquid({ data }) {
   const [selectedMonth, setSelectedMonth] = useState(""); 
   const safeData = Array.isArray(data) ? data : [];
 
@@ -33,7 +33,7 @@ export default function CardReflect({ data }) {
       const monthKey = `${year}-${String(month).padStart(2, "0")}`;
       if (selectedMonth && monthKey !== selectedMonth) return; // filter by month
 
-      const rawValue = row["Video Reflected (Watt)"];
+      const rawValue = row["Cooling Liquid Flow (L/min)"];
       if (!rawValue) return;
 
       const value = Number(String(rawValue).replace(",", "."));
@@ -58,7 +58,7 @@ export default function CardReflect({ data }) {
     return Object.entries(grouped)
       .map(([date, { total, count, dateObj }]) => ({
         tanggal: date,
-        videoReflect: count > 0 ? Number((total / count).toFixed(2)) : 0,
+        CoolingLiquid: count > 0 ? Number((total / count).toFixed(2)) : 0,
         _dateObj: dateObj
       }))
       .sort((a, b) => a._dateObj - b._dateObj)
@@ -71,7 +71,7 @@ export default function CardReflect({ data }) {
         <div className="card-body">
           <div className="d-flex justify-content-between">
             <div>
-              <h6 className="fw-semibold mb-3"><i className="ti ti-video text-danger me-2 fw-bold"></i>Rata-Rata Video Reflected (Watt)</h6>
+              <h6 className="fw-semibold mb-3"><i className="ti ti-droplet text-danger me-2 fw-bold"></i>Rata-Rata Cooling Liquid Flow (L/min)</h6>
             </div>
             <div className="d-flex gap-2 align-items-center mb-3">
               <input
@@ -88,7 +88,7 @@ export default function CardReflect({ data }) {
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={chartData}>
               <defs>
-                <linearGradient id="colorvideoReflect" x1="0" y1="0" x2="0" y2="1">
+                <linearGradient id="colorCoolingLiquid" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#d57d35ff" stopOpacity={0.6} />
                   <stop offset="95%" stopColor="#d57d35ff" stopOpacity={0} />
                 </linearGradient>
@@ -108,10 +108,10 @@ export default function CardReflect({ data }) {
 
               <Area
                 type="monotone"
-                dataKey="videoReflect"
+                dataKey="CoolingLiquid"
                 stroke="#d57d35ff"
                 strokeWidth={1.5}
-                fill="url(#colorvideoReflect)"
+                fill="url(#colorCoolingLiquid)"
                 activeDot={{
                   r: 4,
                   fill: "#d57d35ff",
