@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { useTransmitterData } from "../api/fetchController";
 import CardChart from "./main/cardvideooutput";
-import CardReflect from "./main/cardvideoreflected";
-import CardIm from "./main/cardvideoim";
-import CarMer from "./main/cardvideoMer";
-import CardCooling from "./main/cardcooling";
-import CardCooolingLiquid from "./main/cardcoolingliquid";
 import SpeedometerTvri from "./main/speedotvri";
 import SpeedometerSwasta from "./main/speedoswasta";
+import CardChartBar from "./main/cardbarvideooutput";
+import CardChartCooling from "./main/cardcooling";
+import CardChartBarCool from "./main/cardbarcooling";
+import CardChartchanneltvri from "./main/cardchannel";
+import CardChartchannelswasta from "./main/cardswasta";
 
 export default function DashboardLayout() {
     const { data, loading } = useTransmitterData();
@@ -36,13 +36,13 @@ export default function DashboardLayout() {
         <div>
             <div className="row">
                 <CardChart data={data} />
-                <CardReflect data={data} />
-                <CardIm data={data} />
-                <CarMer data={data} />
-                <CardCooling data={data} />
-                <CardCooolingLiquid data={data} />
+                <CardChartBar data={data} />
+                <CardChartCooling data={data} />
+                <CardChartBarCool data={data} />
                 <SpeedometerTvri data={data} />
                 <SpeedometerSwasta data={data} />
+                <CardChartchanneltvri data={data} />
+                <CardChartchannelswasta data={data} />
             </div>
         </div>
     );
