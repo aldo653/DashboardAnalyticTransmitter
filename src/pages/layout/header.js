@@ -199,7 +199,7 @@ export default function Header() {
                             <a href="./main/index.html" className="text-nowrap nav-link d-flex align-items-center">
                                 <Image src="/assets/asset/main_logo.svg" alt="Main Logo" className="dark-logo" width={180} height={60} />
                                 <h6 className="ms-2 fw-bold">
-                                    <strong>Transmission Analytic Dashboard</strong>
+                                    <strong>Transmitter Performance Digital Monitoring</strong>
                                 </h6>
                             </a>
                         </li>

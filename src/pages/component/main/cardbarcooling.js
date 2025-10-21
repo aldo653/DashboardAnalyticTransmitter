@@ -126,7 +126,7 @@ export default function CardChartBarCool({ data }) {
               <XAxis dataKey="label" stroke="#ccc" tick={{ fontSize: 10, fill: "#666" }} interval={0} angle={-30} textAnchor="end" height={60} />
               <YAxis stroke="#ccc" tick={{ fontSize: 10, fill: "#666" }} />
               <Tooltip wrapperStyle={{ fontSize: "12px" }} formatter={(v) => [`${v}`, "Rata-rata"]} />
-              <Bar dataKey="value" fill="#ffae1f" barSize={40} radius={[6, 6, 0, 0]} animationDuration={800}>
+              <Bar dataKey="value" fill="#ffae1f" barSize={30} radius={[6, 6, 0, 0]} animationDuration={800}>
                 <LabelList dataKey="value" position="top" fontSize={10} fill="#444" formatter={(v) => `${v}`} />
               </Bar>
             </BarChart>

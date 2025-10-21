@@ -19,14 +19,14 @@ export default function Navbar() {
               <li className="sidebar-item">
                 <Link className={`sidebar-link ${pathname === "/" ? "active" : ""}`} href="/" aria-expanded="false">
                   <span><i className="ti ti-broadcast"></i></span>
-                  <span className="hide-menu">Daily Transmission</span>
+                  <span className="hide-menu">Main Transmission</span>
                 </Link>
               </li>
 
               <li className="sidebar-item">
                 <Link className={`sidebar-link ${pathname === "/warmup" ? "active" : ""}`} href="/warmup" aria-expanded="false">
-                  <span><i className="ti ti-flame"></i></span>
-                  <span className="hide-menu">Warmup Backup Transmitter</span>
+                  <span><i className="ti ti-building-broadcast-tower"></i></span>
+                  <span className="hide-menu">Regional Transmission</span>
                 </Link>
               </li>
             </ul>

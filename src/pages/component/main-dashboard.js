@@ -9,6 +9,8 @@ import CardChartCooling from "./main/cardcooling";
 import CardChartBarCool from "./main/cardbarcooling";
 import CardChartchanneltvri from "./main/cardchannel";
 import CardChartchannelswasta from "./main/cardswasta";
+import Cardtrendlistrik from "./main/cardtrendlistrik";
+import Cardtrendlistrikall from "./main/cardtrendalllistrik";
 
 export default function DashboardLayout() {
     const { data, loading } = useTransmitterData();
@@ -43,6 +45,8 @@ export default function DashboardLayout() {
                 <SpeedometerSwasta data={data} />
                 <CardChartchanneltvri data={data} />
                 <CardChartchannelswasta data={data} />
+                <Cardtrendlistrik data={data} />
+                <Cardtrendlistrikall data={data} />
             </div>
         </div>
     );
