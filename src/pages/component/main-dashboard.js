@@ -11,6 +11,7 @@ import CardChartchanneltvri from "./main/cardchannel";
 import CardChartchannelswasta from "./main/cardswasta";
 import Cardtrendlistrik from "./main/cardtrendlistrik";
 import Cardtrendlistrikall from "./main/cardtrendalllistrik";
+import HeatmapTvri from "./main/heatmap";
 
 export default function DashboardLayout() {
     const { data, loading } = useTransmitterData();
@@ -47,6 +48,9 @@ export default function DashboardLayout() {
                 <CardChartchannelswasta data={data} />
                 <Cardtrendlistrik data={data} />
                 <Cardtrendlistrikall data={data} />
+            </div>
+            <div className="col-12">
+                <HeatmapTvri data={data} />
             </div>
         </div>
     );

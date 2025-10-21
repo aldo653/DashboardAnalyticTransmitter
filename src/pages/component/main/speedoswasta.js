@@ -64,7 +64,7 @@ export default function SpeedometerSwasta({ data }) {
           {/* Header & Filter */}
           <div>
             <h6 className="fw-semibold mb-0 flex-grow-1 text-center mb-3">
-              <i className="ti ti-gauge text-primary me-2 fw-bold"></i>Bitrate Channel Mitra (Bit)
+              <i className="ti ti-gauge text-primary me-2 fw-bold"></i>Mbpsrate Channel Mitra (Mbps)
             </h6>
             <div className="d-flex justify-content-center align-items-center gap-2 flex-nowrap">
               <select className="form-select form-select-sm" value={selectedChannel} onChange={(e) => setSelectedChannel(e.target.value)} style={{ width: "130px" }}>
@@ -91,7 +91,7 @@ export default function SpeedometerSwasta({ data }) {
               segmentColors={["#fa896b", "#ffae1f", "#13deb9", "#5d87ff"]}
               needleColor="black"
               ringWidth={50}
-              currentValueText={`${value.toFixed(2)} Bit`}
+              currentValueText={`${value.toFixed(2)} Mbps`}
               textColor={value > target ? "red" : "#111"}
               valueTextFontSize="27px"
               needleTransitionDuration={1300}
@@ -107,7 +107,7 @@ export default function SpeedometerSwasta({ data }) {
             {valueForDate === null ? (
               <span className="text-muted">Pilih tanggal untuk melihat data</span>
             ) : value > target ? (
-              <span className="badge bg-danger px-3 py-2">Melebihi Target ({target} Bit)</span>
+              <span className="badge bg-danger px-3 py-2">Melebihi Target ({target} Mbps)</span>
             ) : (
               <span className="badge bg-success px-3 py-2">Dalam Batas Normal</span>
             )}

@@ -1,13 +1,13 @@
-// src/pages/api/main-transmiiter.js
+// src/pages/api/main-transmitter.js
 
-async function fetchSpreadsheetData() {
+async function fetchSheetRegional() {
   try {
-    // hardcode variabel
-    const sheetId = "1RSDgWrkO3aoURJeCQz6tDE0tuw78bXKtEf4WgFDKoS4";
-    const range = "Form Responses 1!A:AQ";
+    // Hardcode variabel
+    const sheetId = "172n10PQCuVpP2om-a4HJwmbntl2Kot1t46LSVUa0Rck";
+    const range = "Form Responses 1!A:AE";
     const apiKey = "AIzaSyDxb2VIw8ShxMFOIf7WXTS20uIxFVdNt14";
 
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(range)}?key=${apiKey}`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -22,27 +22,25 @@ async function fetchSpreadsheetData() {
 
     const [header, ...rows] = data.values;
 
-    return {
-      header,
-      rows,
-      formatted: rows.map((row) =>
-        header.reduce((obj, key, index) => {
-          if (row[index] !== undefined && row[index] !== "") {
-            obj[key] = row[index];
-          }
-          return obj;
-        }, {})
-      ),
-    };
+    const formatted = rows.map((row) =>
+      header.reduce((obj, key, index) => {
+        if (row[index] !== undefined && row[index] !== "") {
+          obj[key] = row[index];
+        }
+        return obj;
+      }, {})
+    );
+
+    return { header, rows, formatted };
   } catch (error) {
-    console.error("fetchSpreadsheetData error:", error.message);
+    console.error("fetchSheetRegional error:", error.message);
     return { header: [], rows: [], formatted: [] };
   }
 }
 
 export default async function handler(req, res) {
   try {
-    const result = await fetchSpreadsheetData();
+    const result = await fetchSheetRegional();
     res.status(200).json(result);
   } catch (error) {
     console.error("API handler error:", error.message);

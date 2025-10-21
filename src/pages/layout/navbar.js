@@ -24,7 +24,7 @@ export default function Navbar() {
               </li>
 
               <li className="sidebar-item">
-                <Link className={`sidebar-link ${pathname === "/warmup" ? "active" : ""}`} href="/warmup" aria-expanded="false">
+                <Link className={`sidebar-link ${pathname === "/regional" ? "active" : ""}`} href="/regional" aria-expanded="false">
                   <span><i className="ti ti-building-broadcast-tower"></i></span>
                   <span className="hide-menu">Regional Transmission</span>
                 </Link>

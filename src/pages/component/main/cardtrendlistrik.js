@@ -88,14 +88,14 @@ export default function Cardtrendlistrik({ data }) {
           {/* Judul */}
           <h6 className="fw-semibold mb-3 text-center">
             <i className="ti ti-bolt text-warning me-2 fw-bold"></i>
-            Trend Penggunaan Distribusi Listrik{" "}
+            Distribusi Penggunaan Listrik{" "} 
             {selectedType === "EI"
               ? "Electrosys Input"
               : selectedType === "EO"
               ? "Electrosys Output"
               : selectedType === "NU"
               ? "NEC - U"
-              : "NEC - V"}
+              : "NEC - V"} (KWatt)
           </h6>
 
           {/* Filter */}

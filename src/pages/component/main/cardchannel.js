@@ -66,7 +66,7 @@ export default function CardChartchanneltvri({ data }) {
           {/* Judul */}
           <h6 className="fw-semibold mb-3 text-center">
             <i className="ti ti-video text-info me-2 fw-bold"></i>
-            Rata-Rata Bitrate {selectedColumn}
+            Rata-Rata Bitrate {selectedColumn} (Mbps)
           </h6>
 
           {/* Filter */}
