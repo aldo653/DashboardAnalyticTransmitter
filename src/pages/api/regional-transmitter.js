@@ -4,7 +4,7 @@ async function fetchSheetRegional() {
   try {
     // Hardcode variabel
     const sheetId = "172n10PQCuVpP2om-a4HJwmbntl2Kot1t46LSVUa0Rck";
-    const range = "Form Responses 1!A:AE";
+    const range = "Form Responses 1!A:AF";
     const apiKey = "AIzaSyDxb2VIw8ShxMFOIf7WXTS20uIxFVdNt14";
 
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(range)}?key=${apiKey}`;
