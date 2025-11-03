@@ -86,14 +86,14 @@ export default function Cardtrendlistrikall({ data }) {
                     {/* Judul */}
                     <h6 className="fw-semibold mb-3 text-center">
                         <i className="ti ti-bolt text-info me-2 fw-bold"></i>
-                        Rata-Rata Penggunaan Listrik{" "} 
+                        Rata-Rata Tegangan Listrik{" "}
                         {selectedType === "EI"
                             ? "Electrosys Input"
                             : selectedType === "EO"
                                 ? "Electrosys Output"
                                 : selectedType === "NU"
                                     ? "NEC - U"
-                                    : "NEC - V"} (KWatt)
+                                    : "NEC - V"} (Volt)
                     </h6>
 
                     {/* Filter */}
@@ -111,10 +111,10 @@ export default function Cardtrendlistrikall({ data }) {
                             onChange={(e) => setSelectedType(e.target.value)}
                             style={{ width: "180px" }}
                         >
-                            <option value="EI">Electrosys Input</option>
-                            <option value="EO">Electrosys Output</option>
-                            <option value="NU">NEC - U</option>
-                            <option value="NV">NEC - V</option>
+                            <option value="EI">Electrosys (In)</option>
+                            <option value="EO">Electrosys (Out)</option>
+                            <option value="NU">3 Phase (NEC)</option>
+                            <option value="NV">2 Phase (NEC)</option>
                         </select>
                         <button
                             className="btn btn-sm btn-outline-info"

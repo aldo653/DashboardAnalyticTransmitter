@@ -17,71 +17,80 @@ import HeatmapTvri from "./main/heatmap";
 export default function DashboardLayout() {
   const { data, loading } = useTransmitterData(10000);
   const [isLoading, setIsLoading] = useState(true);
-  const lastSentTimestamp = useRef(null); // supaya kirim 1x per timestamp
+  const lastSentTimestamp = useRef(null);
+
+  // Ambil data terakhir yang dikirim dari localStorage (persisten antar refresh/tab)
+  useEffect(() => {
+    const savedTimestamp = localStorage.getItem("lastSentTimestamp");
+    if (savedTimestamp) {
+      lastSentTimestamp.current = savedTimestamp;
+      console.log("🧩 Restore lastSentTimestamp dari localStorage:", savedTimestamp);
+    }
+  }, []);
 
   useEffect(() => {
-  if (!data || data.length === 0) {
-    console.log("🚫 Data kosong atau belum tersedia");
-    return;
-  }
+    if (!data || data.length === 0) {
+      console.log("🚫 Data kosong atau belum tersedia");
+      return;
+    }
 
-  const lastRow = data[data.length - 1];
-  const timestamp = lastRow["Timestamp"];
-  console.log("🕒 Mengecek data terbaru:", timestamp);
+    const lastRow = data[data.length - 1];
+    const timestamp = lastRow["Timestamp"];
+    console.log("🕒 Mengecek data terbaru:", timestamp);
 
-  // Cegah pengiriman berulang untuk timestamp yang sama
-  if (timestamp === lastSentTimestamp.current) {
-    console.log("⏸ Notifikasi sudah dikirim untuk timestamp ini:", timestamp);
-    return;
-  }
+    // Cegah pengiriman berulang untuk timestamp yang sama
+    if (timestamp === lastSentTimestamp.current) {
+      console.log("⏸ Notifikasi sudah dikirim untuk timestamp ini:", timestamp);
+      return;
+    }
 
-  const channelThresholds = {
-    "TVRI SUMSEL": 4,
-    "TVRI NASIONAL": 4,
-    "TVRI SPORT": 4,
-    "TVRI WORLD": 4,
-    "RCTI": 4,
-    "RTV": 4,
-    "MDTV": 4,
-    "BTV": 2,
-    "PAL TV": 2,
-  };
+    const channelThresholds = {
+      "TVRI SUMSEL": 4,
+      "TVRI NASIONAL": 4,
+      "TVRI SPORT": 4,
+      "TVRI WORLD": 4,
+      "RCTI": 4,
+      "RTV": 4,
+      "MDTV": 4,
+      "BTV": 2,
+      "PAL TV": 2,
+    };
 
-  console.log("📊 Mulai pengecekan nilai channel...");
-  const exceededChannels = Object.entries(channelThresholds)
-    .filter(([channel, threshold]) => {
-      const rawValue = lastRow[channel];
-      const value = parseFloat(String(rawValue).replace(",", "."));
-      console.log(
-        `➡️ ${channel}: raw="${rawValue}", parsed=${value} Mbps (threshold ${threshold})`
-      );
-      return !isNaN(value) && value > threshold;
-    })
-    .map(([channel]) => channel);
+    console.log("📊 Mulai pengecekan nilai channel...");
+    const exceededChannels = Object.entries(channelThresholds)
+      .filter(([channel, threshold]) => {
+        const rawValue = lastRow[channel];
+        const value = parseFloat(String(rawValue).replace(",", "."));
+        console.log(
+          `➡️ ${channel}: raw="${rawValue}", parsed=${value} Mbps (threshold ${threshold})`
+        );
+        return !isNaN(value) && value > threshold;
+      })
+      .map(([channel]) => channel);
 
-  if (exceededChannels.length > 0) {
-    console.log("⚠️ Channel melebihi ambang batas:", exceededChannels);
+    if (exceededChannels.length > 0) {
+      console.log("⚠️ Channel melebihi ambang batas:", exceededChannels);
 
-    const messageLines = exceededChannels.map((channel) => {
-      const value = parseFloat(String(lastRow[channel]).replace(",", ".")).toFixed(2);
-      return `📺 ${channel}: ${value} Mbps`;
-    });
+      const messageLines = exceededChannels.map((channel) => {
+        const value = parseFloat(String(lastRow[channel]).replace(",", ".")).toFixed(2);
+        return `📺 ${channel}: ${value} Mbps`;
+      });
 
-    const message =
-      `⚠️ *Laporan Keadaan Output Transmisi Palembang* ⚠️\n\n` +
-      `🗓 Tanggal: ${timestamp}\n` +
-      `👤 Petugas: ${lastRow["Petugas"]}\n\n` +
-      messageLines.join("\n") +
-      `\n\n📈 Nilai di atas ambang batas normal.`;
+      const message =
+        `⚠️ *Laporan Keadaan Output Transmisi Palembang* ⚠️\n\n` +
+        `🗓 Tanggal: ${timestamp}\n` +
+        `👤 Petugas: ${lastRow["Petugas"]}\n\n` +
+        messageLines.join("\n") +
+        `\n\n📈 Nilai di atas ambang batas normal.`;
 
-    sendTelegramMessage(message);
-    lastSentTimestamp.current = timestamp;
-    console.log("🔔 Notifikasi dikirim untuk timestamp:", timestamp);
-  } else {
-    console.log("✅ Tidak ada channel yang melebihi ambang batas.");
-  }
-}, [data]);
-
+      sendTelegramMessage(message);
+      lastSentTimestamp.current = timestamp;
+      localStorage.setItem("lastSentTimestamp", timestamp); // simpan agar tidak kirim lagi walau refresh
+      console.log("🔔 Notifikasi dikirim untuk timestamp:", timestamp);
+    } else {
+      console.log("✅ Tidak ada channel yang melebihi ambang batas.");
+    }
+  }, [data]);
 
   useEffect(() => {
     if (!loading) {
