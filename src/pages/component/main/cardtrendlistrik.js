@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   LineChart,
   Line,
@@ -12,7 +12,13 @@ import {
 
 export default function Cardtrendlistrik({ data }) {
   const [selectedMonth, setSelectedMonth] = useState("");
-  const [selectedType, setSelectedType] = useState("EI"); 
+  const [selectedType, setSelectedType] = useState("EI");
+
+  useEffect(() => {
+    const now = new Date();
+    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    setSelectedMonth(currentMonth);
+  }, []);
 
   const safeData = Array.isArray(data) ? data : [];
 
@@ -66,10 +72,10 @@ export default function Cardtrendlistrik({ data }) {
     selectedType === "EI"
       ? ["R - N", "S - N", "T - N"]
       : selectedType === "EO"
-      ? ["R - N (1)", "S - N (1)", "T - N (1)"]
-      : selectedType === "NU"
-      ? ["R-S (U12)", "S-T (U23)", "T-R (U31)"]
-      : ["R-N (V1)", "S-N (V2)", "T-N (V3)"];
+        ? ["R - N (1)", "S - N (1)", "T - N (1)"]
+        : selectedType === "NU"
+          ? ["R-S (U12)", "S-T (U23)", "T-R (U31)"]
+          : ["R-N (V1)", "S-N (V2)", "T-N (V3)"];
 
   const colors = ["#539bff", "#28c76f", "#ff9f43"];
 
@@ -77,9 +83,9 @@ export default function Cardtrendlistrik({ data }) {
   const yDomain =
     selectedType === "NU"
       ? [375, 385]
-      : selectedType == "NV" 
-      ? [215, 225] 
-      : [200, 250]; // untuk EI, EO, dan NV
+      : selectedType == "NV"
+        ? [215, 225]
+        : [200, 250]; // untuk EI, EO, dan NV
 
   return (
     <div className="col-12 col-md-6">
@@ -88,14 +94,14 @@ export default function Cardtrendlistrik({ data }) {
           {/* Judul */}
           <h6 className="fw-semibold mb-3 text-center">
             <i className="ti ti-bolt text-warning me-2 fw-bold"></i>
-            Tegangan Listrik{" "} 
+            Tegangan Listrik{" "}
             {selectedType === "EI"
               ? "Electrosys Input"
               : selectedType === "EO"
-              ? "Electrosys Output"
-              : selectedType === "NU"
-              ? "NEC - U"
-              : "NEC - V"} (Volt)
+                ? "Electrosys Output"
+                : selectedType === "NU"
+                  ? "NEC - U"
+                  : "NEC - V"} (Volt)
           </h6>
 
           {/* Filter */}
@@ -156,7 +162,7 @@ export default function Cardtrendlistrik({ data }) {
                   dataKey={key}
                   stroke={colors[idx]}
                   strokeWidth={2}
-                  dot={false}
+                  dot={true}
                   isAnimationActive={true}
                   animationDuration={800}
                 />

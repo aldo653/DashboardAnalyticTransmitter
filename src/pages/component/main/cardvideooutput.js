@@ -1,11 +1,17 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function CardChart({ data }) {
   // state untuk menyimpan bulan dan kolom yang dipilih
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedColumn, setSelectedColumn] = useState("Video Output (Kw)");
+
+  useEffect(() => {
+    const now = new Date();
+    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    setSelectedMonth(currentMonth);
+  }, []);
 
   // pastikan data berbentuk array agar aman
   const safeData = Array.isArray(data) ? data : [];

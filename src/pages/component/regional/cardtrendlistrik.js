@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   LineChart,
   Line,
@@ -14,6 +14,12 @@ export default function CardtrendlistrikReg({ data }) {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedType, setSelectedType] = useState("EI");
   const [selectedRegion, setSelectedRegion] = useState("Prabumulih");
+
+  useEffect(() => {
+    const now = new Date();
+    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    setSelectedMonth(currentMonth);
+  }, []);
 
   const safeData = Array.isArray(data) ? data : [];
 
@@ -88,7 +94,7 @@ export default function CardtrendlistrikReg({ data }) {
 
   const colors = ["#539bff", "#28c76f", "#ff9f43"];
 
-  const yDomain = selectedType === "EI" ? [200, 230] : [200, 230];
+  const yDomain = selectedType === "EI" ? [210, 250] : [210, 250];
 
   return (
     <div className="col-12 col-md-6">
@@ -101,10 +107,10 @@ export default function CardtrendlistrikReg({ data }) {
             {selectedType === "EI"
               ? "Electrosys Input"
               : selectedType === "EO"
-              ? "Electrosys Output"
-              : selectedType === "NU"
-              ? "NEC - U"
-              : "NEC - V"}{" "}
+                ? "Electrosys Output"
+                : selectedType === "NU"
+                  ? "NEC - U"
+                  : "NEC - V"}{" "}
             (KWatt) {selectedRegion}
           </h6>
 
@@ -179,7 +185,7 @@ export default function CardtrendlistrikReg({ data }) {
                   dataKey={key}
                   stroke={colors[idx]}
                   strokeWidth={2}
-                  dot={false}
+                  dot={true}
                   isAnimationActive={true}
                   animationDuration={800}
                 />

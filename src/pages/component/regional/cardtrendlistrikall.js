@@ -15,6 +15,12 @@ export default function CardtrendlistrikallReg({ data }) {
     const [selectedType, setSelectedType] = useState("EI");
     const [selectedRegion, setSelectedRegion] = useState("");
 
+    useEffect(() => {
+        const now = new Date();
+        const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+        setSelectedMonth(currentMonth);
+    }, []);
+
     const safeData = Array.isArray(data) ? data : [];
 
     // Ambil daftar unik dari kolom "Satuan Transmisi Daerah"
@@ -97,8 +103,8 @@ export default function CardtrendlistrikallReg({ data }) {
         selectedType === "NU"
             ? [375, 380]
             : selectedType === "NV"
-            ? [215, 220]
-            : [200, 235];
+                ? [215, 230]
+                : [210, 240];
 
     const color = "#539bff";
 
@@ -179,6 +185,7 @@ export default function CardtrendlistrikallReg({ data }) {
                             <YAxis
                                 stroke="#ccc"
                                 domain={yDomain}
+                                allowdecimal={false}
                                 tick={{ fontSize: 10, fill: "#666" }}
                             />
                             <Tooltip

@@ -14,7 +14,7 @@ import {
 export default function CardChartBarCool({ data }) {
   // State untuk filter
   const [selectedYear, setSelectedYear] = useState("2025");
-  const [viewMode, setViewMode] = useState("weekly");
+  const [viewMode, setViewMode] = useState("monthly"); // "monthly" atau "weekly"
   const [selectedColumn, setSelectedColumn] = useState("Cooling Temperature (°C)");
 
   const safeData = Array.isArray(data) ? data : [];

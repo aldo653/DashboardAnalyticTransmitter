@@ -13,7 +13,7 @@ import {
 
 export default function CardBarOutput({ data }) {
   const [selectedYear, setSelectedYear] = useState("2025");
-  const [viewMode, setViewMode] = useState("weekly");
+  const [viewMode, setViewMode] = useState("monthly"); // "monthly" atau "weekly"
   const [selectedColumn, setSelectedColumn] = useState("Output(Rev) Kw");
   const [selectedRegion, setSelectedRegion] = useState("Prabumulih");
 

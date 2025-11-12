@@ -14,7 +14,7 @@ import {
 export default function CardChartBar({ data }) {
   // State untuk filter
   const [selectedYear, setSelectedYear] = useState("2025");
-  const [viewMode, setViewMode] = useState("weekly");
+  const [viewMode, setViewMode] = useState("monthly"); // "monthly" atau "weekly"
   const [selectedColumn, setSelectedColumn] = useState("Video Output (Kw)");
 
   const safeData = Array.isArray(data) ? data : [];

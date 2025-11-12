@@ -339,39 +339,78 @@ export default function DashboardLayout() {
 
   // === LOGIKA 2: Pengingat harian (jam 04:00, 09:00, 15:00, 20:00 WIB) ===
   useEffect(() => {
-    const reminderTimes = ["04:00", "10.00", "15:00", "20:00"];
+    // Bisa berisi "HH:00" atau "HH:MM"
+    const reminderTimes = ["04:00", "09:00", "15:00", "20:00"];
 
     const checkReminder = () => {
-      // Ambil waktu sekarang dalam zona waktu WIB (Asia/Jakarta)
-      const nowUtc = new Date();
-      const wibTime = new Date(nowUtc.getTime() + 7 * 60 * 60 * 1000); // UTC+7 (WIB)
-      
-      const currentHour = wibTime.getUTCHours().toString().padStart(2, "0");
-      const currentMinute = wibTime.getUTCMinutes().toString().padStart(2, "0");
-      const currentTime = `${currentHour}:${currentMinute}`;
-      const today = wibTime.toISOString().split("T")[0];
+      const now = new Date();
 
-      // Kirim notif jika jam cocok & belum dikirim hari ini pada jam itu
-      if (
-        reminderTimes.includes(`${currentHour}:00`) &&
-        lastReminderDate.current !== `${today}-${currentHour}`
-      ) {
-        const message =
-          `⏰ *Pengingat Metering Harian (WIB)*\n\n` +
-          `🗓 Waktu: ${currentTime} WIB\n` +
-          `Mohon lakukan pengecekan & pencatatan metering harian di Stasiun Transmisi Palembang.\n\n` +
-          `#TVRI #Monitoring #TransmisiPalembang`;
+      // Ambil jam & menit secara andal tanpa bergantung ke separator lokal
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Asia/Jakarta",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      }).formatToParts(now);
 
-        sendTelegramMessage(message);
-        lastReminderDate.current = `${today}-${currentHour}`;
-        localStorage.setItem("lastReminderDate", `${today}-${currentHour}`);
-        console.log("🕘 Notifikasi pengingat dikirim (WIB):", message);
+      const hourPart = parts.find((p) => p.type === "hour");
+      const minutePart = parts.find((p) => p.type === "minute");
+      const hour = hourPart ? hourPart.value.padStart(2, "0") : "00";
+      const minute = minutePart ? minutePart.value.padStart(2, "0") : "00";
+      const currentHM = `${hour}:${minute}`; // mis. "15:04"
+
+      // Hari (YYYY-MM-DD) berdasarkan WIB
+      const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jakarta" }).format(now);
+      // Reminder key akan menyertakan menit agar ambang spesifik menit tidak tercampur
+      const reminderKey = `${today}-${currentHM}`;
+
+      // Normalisasi reminderTimes supaya seragam (titik -> dua titik, dsb.)
+      const normalizedReminders = reminderTimes.map((t) => t.replace(".", ":"));
+
+      console.log(
+        `⏱️ WIB sekarang: ${currentHM} | lastReminderDate: ${lastReminderDate.current} | normalizedReminders: ${normalizedReminders.join(
+          ", "
+        )}`
+      );
+
+      // Cek 2 kondisi:
+      // 1) Ada reminder yang persis cocok pada HH:MM (mis. "15:04")
+      // 2) Ada reminder hanya jam (dengan :00) yang cocok pada jam sekarang (mis. "09:00" ketika menit 00)
+      const isExactMatch = normalizedReminders.includes(currentHM);
+      const isHourMatch = normalizedReminders.includes(`${hour}:00`) && minute === "00";
+
+      if (isExactMatch || isHourMatch) {
+        // Untuk hour-match kita gunakan key dengan :00 agar tidak bentrok
+        const keyToUse = isExactMatch ? reminderKey : `${today}-${hour}:00`;
+
+        if (lastReminderDate.current !== keyToUse) {
+          console.log(`🔔 Waktu cocok (${isExactMatch ? currentHM : hour + ":00"}) → kirim notifikasi`);
+
+          const message =
+            `⏰ *Pengingat Metering Harian (WIB)*\n\n` +
+            `🗓 Waktu: ${currentHM} WIB\n` +
+            `Mohon lakukan pengecekan & pencatatan metering harian di Stasiun Transmisi Palembang.\n\n` +
+            `#TVRI #Monitoring #TransmisiPalembang`;
+
+          sendTelegramMessage(message);
+          lastReminderDate.current = keyToUse;
+          localStorage.setItem("lastReminderDate", keyToUse);
+          console.log("✅ Notifikasi pengingat dikirim:", message);
+        } else {
+          console.log(`⚠️ Sudah dikirim untuk ${isExactMatch ? currentHM : hour + ":00"} hari ini.`);
+        }
+      } else {
+        console.log(`🕐 Bukan waktu pengingat (sekarang ${currentHM})`);
       }
     };
 
-    const interval = setInterval(checkReminder, 60000); // cek tiap menit
+    // Jalankan sekali saat mount supaya langsung terlihat di log
+    checkReminder();
+
+    const interval = setInterval(checkReminder, 60000); // cek tiap 1 menit
     return () => clearInterval(interval);
   }, []);
+
 
   // === Loading state ===
   useEffect(() => {
