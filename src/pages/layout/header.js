@@ -189,7 +189,7 @@ export default function Header() {
                         <div className="offcanvas-body" data-simplebar>
                             <ul id="sidebarnav">
                                 <li className="sidebar-item">
-                                    <Link className={`sidebar-link ${pathname === "/main" ? "active" : ""}`} href="/" aria-expanded="false">
+                                    <Link className={`sidebar-link ${pathname === "/main" ? "active" : ""}`} href="/main" aria-expanded="false">
                                         <span><i className="ti ti-broadcast"></i></span>
                                         <span className="hide-menu">Main Transmission</span>
                                     </Link>
