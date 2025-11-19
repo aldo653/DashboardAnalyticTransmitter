@@ -1,15 +1,28 @@
 "use client";
 import Head from "next/head";
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation"; // ✅ tambahkan ini
 import MainLayout from "./layout/main";
 import RegionalDashboard from "./component/regional-dashboard";
 import CarouselReg from "./component/caraosel-regional";
 import { useTransmitterRegional } from "./api/fetchRegional";
 
 export default function Dashboard() {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [selectedRegion, setSelectedRegion] = useState(null);
   const { data, loading: dataLoading } = useTransmitterRegional();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (!isLoggedIn) {
+      router.push("/"); 
+      return;
+    }
+
+    const timer = setTimeout(() => setLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, [router]);
 
   // Ambil daftar region unik
   const uniqueRegions = useMemo(() => {
@@ -18,17 +31,21 @@ export default function Dashboard() {
     return [...new Set(regions)];
   }, [data]);
 
-  // Data difilter sesuai region
+  // Filter data sesuai region
   const filteredData = useMemo(() => {
     if (!selectedRegion) return data;
     return data.filter((d) => d["Satuan Transmisi Daerah"] === selectedRegion);
   }, [data, selectedRegion]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1500);
-    return () => clearTimeout(timer);
-  }, []);
-
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: "120px" }}>
+        <div className="spinner-border text-warning" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
   return (
     <>
       <Head>
@@ -42,9 +59,8 @@ export default function Dashboard() {
             <button
               key={region}
               onClick={() => setSelectedRegion(region === selectedRegion ? null : region)}
-              className={`btn ${
-                region === selectedRegion ? "btn-primary text-white" : "btn-outline-primary"
-              } btn-sm d-flex align-items-center`}
+              className={`btn ${region === selectedRegion ? "btn-primary text-white" : "btn-outline-primary"
+                } btn-sm d-flex align-items-center`}
             >
               <i className="ti ti-building-broadcast-tower me-2"></i>
               {region}

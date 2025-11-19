@@ -2,9 +2,21 @@
 import React from "react";
 import Image from "next/image";
 import { useTransmitterData } from "../api/fetchController";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
-    // Memanggil hook dengan benar
+
+    const router = useRouter();
+    const pathname = usePathname(); // Mendapatkan path saat ini
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        localStorage.removeItem("isLoggedIn");
+        router.push("/");
+    };
+
     const { data, loading } = useTransmitterData();
 
     // Filter data > 4 untuk kolom tertentu
@@ -37,20 +49,12 @@ export default function Header() {
         <header className="topbar">
             <div className="with-vertical">
                 <nav className="navbar navbar-expand-lg p-0">
-                    <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <a className="nav-link sidebartoggler nav-icon-hover ms-n3" id="headerCollapse" href="#">
-                                <i className="ti ti-menu-2"></i>
-                            </a>
-                        </li>
-                    </ul>
-
                     <div className="d-block d-lg-none flex items-center">
                         <Image
-                            src="/assets/asset/main_logo.svg"
+                            src="/assets/asset/logo.png"
                             alt="Main Logo"
-                            width={180}
-                            height={60}
+                            width={70}
+                            height={40}
                         />
                     </div>
 
@@ -66,7 +70,7 @@ export default function Header() {
 
                             <ul className="navbar-nav flex-row ms-auto align-items-center justify-content-center">
                                 {/* Notification Dropdown */}
-                                 <li className="nav-item dropdown">
+                                <li className="nav-item dropdown">
                                     <a className="nav-link nav-icon-hover" href="#" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i className="ti ti-bell-ringing"></i>
                                         {filteredData?.length > 0 && (
@@ -179,10 +183,26 @@ export default function Header() {
                 <div className="offcanvas offcanvas-start" data-bs-scroll="true" tabIndex="-1" id="mobilenavbar" aria-labelledby="offcanvasWithBothOptionsLabel">
                     <nav className="sidebar-nav scroll-sidebar">
                         <div className="offcanvas-header justify-content-between">
-                            <Image src="/assets/images/logos/favicon.ico" alt="Favicon" className="img-fluid" width={32} height={32} />
+                            <Image src="/assets/asset/logo.png" alt="Favicon" className="img-fluid" width={50} height={32} />
                             <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
-                        <div className="offcanvas-body" data-simplebar style={{ height: "100%" }}></div>
+                        <div className="offcanvas-body" data-simplebar>
+                            <ul id="sidebarnav">
+                                <li className="sidebar-item">
+                                    <Link className={`sidebar-link ${pathname === "/main" ? "active" : ""}`} href="/" aria-expanded="false">
+                                        <span><i className="ti ti-broadcast"></i></span>
+                                        <span className="hide-menu">Main Transmission</span>
+                                    </Link>
+                                </li>
+
+                                <li className="sidebar-item">
+                                    <Link className={`sidebar-link ${pathname === "/regional" ? "active" : ""}`} href="/regional" aria-expanded="false">
+                                        <span><i className="ti ti-building-broadcast-tower"></i></span>
+                                        <span className="hide-menu">Regional Transmission</span>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
                     </nav>
                 </div>
             </div>
@@ -199,7 +219,7 @@ export default function Header() {
                             <a href="./main/index.html" className="text-nowrap nav-link d-flex align-items-center">
                                 <Image src="/assets/asset/main_logo.svg" alt="Main Logo" className="dark-logo" width={180} height={60} />
                                 <h6 className="ms-2 fw-bold">
-                                    <strong>Transmitter Performance Digital Monitoring</strong>
+                                    <strong>Performance Reporting & Intelligent Smart Monitoring Analytics</strong>
                                 </h6>
                             </a>
                         </li>
@@ -208,7 +228,7 @@ export default function Header() {
                     {/* Collapse untuk mobile */}
                     <div className="d-block d-xl-none">
                         <a href="./main/index.html" className="text-nowrap nav-link">
-                            <Image src="/assets/asset/main_logo.svg" alt="Main Logo" width={180} height={60} />
+                            <Image src="/assets/asset/logo.png" alt="Main Logo" width={180} height={60} />
                         </a>
                     </div>
 
@@ -341,8 +361,8 @@ export default function Header() {
                                                 </div>
                                             </div>
                                             <div className="d-grid py-4 px-7 pt-8">
-                                                <a href="#" className="btn btn-outline-primary">
-                                                    Analytic Dashboard
+                                                <a href="#" className="btn btn-outline-danger" onClick={handleLogout}>
+                                                    Log Out
                                                 </a>
                                             </div>
                                         </div>

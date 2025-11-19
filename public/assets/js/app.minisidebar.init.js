@@ -1,7 +1,7 @@
 $(function () {
     "use strict";
     $("#main-wrapper").AdminSettings({
-      Layout: "vertical", // vertical | horizontal
+      Layout: "horizontal", // vertical | horizontal
       SidebarType: "mini-sidebar", // full / mini-sidebar
       BoxedLayout: true, // true | false
       Direction: "ltr", // ltr | rtl
