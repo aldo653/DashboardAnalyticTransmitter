@@ -10,7 +10,6 @@ import Image from "next/image";
 import LoadingPage from "@/providers/loading";
 import { getLastData, getData } from "../../api/function/getData";
 
-
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
