@@ -9,7 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ant-design/plots": "^2.6.8",
+    "@supabase/supabase-js": "^2.97.0",
+    "antd": "^6.3.0",
     "date-fns": "^4.1.0",
+    "dayjs": "^1.11.19",
     "lottie-react": "^2.4.1",
     "next": "15.5.2",
     "react": "19.1.0",

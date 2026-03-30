@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-  const pathname = usePathname(); // Mendapatkan path saat ini
+  const pathname = usePathname(); 
 
   return (
     <div>
@@ -13,8 +13,8 @@ export default function Navbar() {
             <ul id="sidebarnav">
               <li className="sidebar-item">
                 <Link className={`sidebar-link ${pathname === "/main" ? "active" : ""}`} href="/main" aria-expanded="false">
-                  <span><i className="ti ti-broadcast"></i></span>
-                  <span className="hide-menu">Main Transmission</span>
+                  <span><i className="ti ti-clock"></i></span>
+                  <span className="hide-menu">System Performance Overview</span>
                 </Link>
               </li>
 

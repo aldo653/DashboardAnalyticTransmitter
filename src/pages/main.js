@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import MainLayout from "./layout/main";
-import MainDashboard from "./component/main-dashboard";
+import MainDeep from "./main/container/main";
 import Caraosel from "./component/caraosel";
 
 export default function Dashboard() {
@@ -41,8 +41,7 @@ export default function Dashboard() {
                 <title>Transmitter Analytic Dashboard | TVRI Sumatera Selatan</title>
             </Head>
             <MainLayout>
-                <Caraosel />
-                <MainDashboard />
+                <MainDeep />
             </MainLayout>
         </>
     );

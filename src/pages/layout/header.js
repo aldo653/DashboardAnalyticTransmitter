@@ -191,7 +191,7 @@ export default function Header() {
                                 <li className="sidebar-item">
                                     <Link className={`sidebar-link ${pathname === "/main" ? "active" : ""}`} href="/main" aria-expanded="false">
                                         <span><i className="ti ti-broadcast"></i></span>
-                                        <span className="hide-menu">Main Transmission</span>
+                                        <span className="hide-menu">Real Time Monitor</span>
                                     </Link>
                                 </li>
 
